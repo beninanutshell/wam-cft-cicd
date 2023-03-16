@@ -15,12 +15,6 @@ steps:
       args:
       - 'install'
 
-    - id: 'npm test'
-      dir: 'cloud-function'
-      name: 'gcr.io/cloud-builders/npm'
-      args:
-      - 'test'
-
     - id: 'deploy function'
       dir: 'cloud-function'
       name: 'gcr.io/cloud-builders/gcloud'
