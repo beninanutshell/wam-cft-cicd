@@ -40,3 +40,19 @@ steps:
       - '1'
       - '--quiet'
       
+    - id: 'IAM Binding'
+      dir: 'cloud-function'
+      name: 'gcr.io/cloud-builders/gcloud'
+      args:
+      - 'functions'
+      - 'add-iam-policy-binding'
+      - 'secret-function'
+      - '--region'
+      - 'northamerica-northeast1'
+      - '--member'
+      - 'allUsers'
+      - '--role'
+      - 'roles/cloudfunctions.invoker'
+
+
+  
