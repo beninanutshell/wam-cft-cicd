@@ -15,6 +15,13 @@ steps:
       args:
       - 'install'
 
+    - id: 'npm test'
+      dir: 'cloud-function'
+      name: 'gcr.io/cloud-builders/npm'
+      args:
+      - 'run'
+      - 'build'
+
     - id: 'deploy function'
       dir: 'cloud-function'
       name: 'gcr.io/cloud-builders/gcloud'
@@ -32,7 +39,7 @@ steps:
       - '--allow-unauthenticated'
       - '--service-account'
       - 'sac-cft-secret@davhouse-331721.iam.gserviceaccount.com'
-      - 'region'
+      - '--region'
       - 'northamerica-northeast1'
       - '--max-instances'
       - '1'
