@@ -1,0 +1,48 @@
+steps:
+    - id: 'branch name'
+      name: 'alpine'
+      entrypoint: 'sh'  
+      args: 
+      - '-c'
+      - | 
+          echo "***********************"
+          echo "$BRANCH_NAME"
+          echo "***********************"
+
+    - id: 'npm install'
+      dir: 'cloud-function'
+      name: 'gcr.io/cloud-builders/npm'
+      args:
+      - 'install'
+
+    - id: 'npm test'
+      dir: 'cloud-function'
+      name: 'gcr.io/cloud-builders/npm'
+      args:
+      - 'test'
+
+    - id: 'deploy function'
+      dir: 'cloud-function'
+      name: 'gcr.io/cloud-builders/gcloud'
+      args:
+      - 'functions'
+      - 'deploy'
+      - 'secret-function' 
+      - '--trigger-http'
+      - '--runtime'
+      - 'nodejs16'
+      - '--entry-point'
+      - 'readSecret'
+      - '--set-secrets'
+      - '/api/api-key=api-key:latest'
+      - '--allow-unauthenticated'
+      - '--service-account'
+      - 'sac-cft-secret@davhouse-331721.iam.gserviceaccount.com'
+      - 'region'
+      - 'northamerica-northeast1'
+      - '--max-instances'
+      - '1'
+      - '--min-instances'
+      - '1'
+
+      
