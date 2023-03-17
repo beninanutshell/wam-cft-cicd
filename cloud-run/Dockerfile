@@ -11,7 +11,7 @@ ENV CLOJURE_VER=1.10.3.814
 WORKDIR /tmp
 
 # Base image is Debian 9 (Stretch). We need to install Java 11.
-RUN apt-get update && apt-get upgrade \
+RUN apt-get update && apt-get upgrade -y \
   && wget -qO - https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public | apt-key add - \
   && echo "deb https://adoptopenjdk.jfrog.io/adoptopenjdk/deb stretch main" | tee /etc/apt/sources.list.d/adoptopenjdk.list \
   && apt-get update \
