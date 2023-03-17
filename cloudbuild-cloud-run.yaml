@@ -3,15 +3,17 @@ steps:
     dir: 'cloud-run'
     name: gcr.io/cloud-builders/docker
     args:
-      - build
+      - 'build'
       - '-t'
-      - northamerica-northeast1-docker.pkg.dev/davhouse-331721/docker-registry-nam1/demo-secret-container
-      - .
+      - 'northamerica-northeast1-docker.pkg.dev/davhouse-331721/docker-registry-nam1/demo-secret-container'
+      - '.'
 
   - id: "push image"
     dir: 'cloud-run'
     name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'northamerica-northeast1-docker.pkg.dev/davhouse-331721/docker-registry-nam1/demo-secret-container']
+    args:
+      - 'push'
+      - 'northamerica-northeast1-docker.pkg.dev/davhouse-331721/docker-registry-nam1/demo-secret-container'
 
   - id: deploy to cloud run
     name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
