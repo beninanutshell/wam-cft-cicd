@@ -1,0 +1,38 @@
+steps:
+  - id: build image
+    dir: 'cloud-run'
+    name: gcr.io/cloud-builders/docker
+    args:
+      - build
+      - '-t'
+      - northamerica-northeast1-docker.pkg.dev/davhouse-331721/docker-registry-nam1/demo-secret-container
+      - .
+
+  - id: "push image"
+    dir: 'cloud-run'
+    name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'northamerica-northeast1-docker.pkg.dev/davhouse-331721/docker-registry-nam1/demo-secret-container']
+
+  - id: deploy to cloud run
+    name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    dir: 'cloud-run'
+    entrypoint: gcloud
+    args:
+      - 'beta'
+      - 'run'
+      - 'deploy'
+      - 'demo-secret-container'
+      - '--image'
+      - 'northamerica-northeast1-docker.pkg.dev/davhouse-331721/docker-registry-nam1/demo-secret-container'
+      - '--region'
+      - 'northamerica-northeast1'
+      - '--port'
+      - '8080'
+      - '--service-account'
+      - 'sac-cft-secret@davhouse-331721.iam.gserviceaccount.com'
+      - '--allow-unauthenticated'
+      - '--cpu-boost'
+      - '--session-affinity'
+
+images:
+  - northamerica-northeast1-docker.pkg.dev/davhouse-331721/docker-registry-nam1/demo-secret-container
